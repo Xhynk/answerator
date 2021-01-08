@@ -48,6 +48,10 @@
 	} else if( stripos($url, 'www.php.net') ){
 		preg_match('/(?<=<span class="dc-title">).*?(?=<\/span>)/s', $page, $matches );
 		$description = $matches[0];
+
+		if( $description == null ){
+			preg_match('/(?<=<span class="para">).*?(?=<\/span>)/s', $page, $matches );
+		}		
 	}
 
 	echo json_encode( array(
