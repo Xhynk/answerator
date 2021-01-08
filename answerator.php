@@ -24,7 +24,7 @@
 		$result['errno']   = curl_errno( $ch );
 
 		curl_close( $ch );
-		return $header;
+		return $result;
 	}
 
 	$url  = $_REQUEST['url'];
@@ -47,13 +47,14 @@
 		$description = $matches[0];
 	} else if( stripos($url, 'www.php.net') ){
 		preg_match('/(?<=<span class="dc-title">).*?(?=<\/span>)/s', $page, $matches );
+
 		if( !$description = $matches[0] ){
-			preg_match('/(?<=<span class="para">).*?(?=<\/span>)/s', $page, $matches );
+			preg_match('/(?<=<p class="para">).*?(?=<\/p>)/s', $page, $matches );
 			$description = $matches[0];
 		}		
 	}
 
 	echo json_encode( array(
 		'url' => $url,
-		'description' => trim(strip_tags($description))
+		'description' => trim(strip_tags(preg_replace('/\r?\n|\r/', '', preg_replace('/\s+/', ' ', $description))))
 	) );
