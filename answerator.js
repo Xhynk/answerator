@@ -8,10 +8,10 @@
 // @grant        none
 // ==/UserScript==
 
-(() => {
+(function() {
 	'use strict';
 
-	window.onload = () => {
+	window.onload = function(){
 		// Add some loading styles
 		var style = document.createElement('style');
 		style.innerHTML = `.wmd-preview.loading{position:relative}.wmd-preview.loading:after{content:"";position:absolute;top:-12px;left:-12px;width:calc(100% + 12px);height:calc(100% + 12px);background:rgba(0,0,0,.5);backdrop-filter:blur(.6px)}.wmd-preview.loading:before{z-index:10;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:100px;border:24px solid rgba(255,255,255,.2);content:"";border-radius:100px;border-top-color:#0094ee;animation:wmdpreviewspin .2s linear forwards infinite}@keyframes wmdpreviewspin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}`;
@@ -24,14 +24,14 @@
 		answeratorButton.classList.add('grid--cell', 's-btn', 's-btn__primary', 's-btn__icon');
 		answeratorButton.style.background = '#9f43bd';
 		answeratorButton.innerText = 'Answerator';
-		answeratorButton.onclick = (button) => {
+		answeratorButton.onclick = function(){
 			event.preventDefault();
 
 			// Show we're doing something
-			var preview = button.closest('form').querySelector('.wmd-preview');
+			var preview = this.closest('form').querySelector('.wmd-preview');
 			preview.classList.add('loading');
 
-			var input = button.closest('form').querySelector('#wmd-input');
+			var input = this.closest('form').querySelector('#wmd-input');
 			input = (input === null) ? '' : input;
 			var value = input.value;
 
