@@ -7,34 +7,29 @@
 
 		$options = array(
 			CURLOPT_CUSTOMREQUEST  => "GET",
-			CURLOPT_POST		   => false,
-			CURLOPT_USERAGENT	   => $user_agent,
+			CURLOPT_POST           => false,
+			CURLOPT_USERAGENT      => $user_agent,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_HEADER	       => false,
+			CURLOPT_HEADER         => false,
 			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_ENCODING	   => "",
+			CURLOPT_ENCODING       => "",
 		);
 
-		$ch   = curl_init( $url );
+		$ch = curl_init( $url );
 		curl_setopt_array( $ch, $options );
 
-		$content = curl_exec( $ch );
-		$err	 = curl_errno( $ch );
-		$errmsg  = curl_error( $ch );
-		$header  = curl_getinfo( $ch );
+		$result = curl_getinfo( $ch );
+		$result['content'] = curl_exec( $ch );
+		$result['errmsg']  = curl_error( $ch );
+		$result['errno']   = curl_errno( $ch );
 
 		curl_close( $ch );
-
-		$header['errno']   = $err;
-		$header['errmsg']  = $errmsg;
-		$header['content'] = $content;
-
 		return $header;
 	}
 
 	$url  = $_REQUEST['url'];
-	$path = __DIR__ .'/cache/'. preg_replace('[\W|_]', '', $url ).'.html';
 	$doc  = new DOMDocument();
+	$path = __DIR__ . sprintf( '/cache/%s.html', preg_replace('[\W|_]', '', $url) );
 
 	// Check for cache:
 	if( file_exists($path) && time() - filemtime($path) <= 60 * 60 * 24 * 7 ){

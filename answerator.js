@@ -18,7 +18,7 @@
 		document.head.appendChild(style);
 
 		// Add the Answerator Button
-		var submitButton = document.querySelector('#submit-button');
+		var submitButton     = document.querySelector('#submit-button');
 		var answeratorButton = document.createElement('span');
 
 		answeratorButton.classList.add('grid--cell', 's-btn', 's-btn__primary', 's-btn__icon');
@@ -31,13 +31,17 @@
 			var preview = this.closest('form').querySelector('.wmd-preview');
 			preview.classList.add('loading');
 
+			// Find the answer input (TODO: Change for edits)
 			var input = this.closest('form').querySelector('#wmd-input');
 			input = (input === null) ? '' : input;
 			var value = input.value;
 
+			// Look for %%type|function%% matches
 			var matches = value.match(/%%[|\w\d]*%%/gi);
 			if( matches !== null && matches.length > 0 ){
 				matches = [...new Set(matches)]; // Remove Duplicates
+
+				// Start the Reference Table
 				input.value += '\r\n\r\n----\r\n\r\n### Documentation & Function Reference\r\n\r\n| Function | Linked Description |\r\n\| --- | --- |\r\n';
 
 				matches.forEach((match,i) => {
@@ -47,6 +51,7 @@
 							xURL = 'https://xhynk.com/answerator/?url=',
 							refURL;
 
+					// Where do we look? (Todo: Parse this manually in the fetch request?)
 					switch( type ){
 						case 'wpf': refURL = 'https://developer.wordpress.org/reference/functions/' + ref; xURL += refURL; break;
 						case 'wph': refURL = 'https://developer.wordpress.org/reference/hooks/' + ref; xURL += refURL; break;
