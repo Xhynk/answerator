@@ -55,7 +55,8 @@
 					switch( type ){
 						case 'wpf': refURL = 'https://developer.wordpress.org/reference/functions/' + ref; xURL += refURL; break;
 						case 'wph': refURL = 'https://developer.wordpress.org/reference/hooks/' + ref; xURL += refURL; break;
-						case 'pf':  refURL = 'https://www.php.net/manual/en/function.'+ ref.replace(/_/g,'-') +'.php'; xURL += refURL; break;
+						case 'f':   refURL = 'https://www.php.net/manual/en/function.'+ ref.replace(/_/g,'-') +'.php'; xURL += refURL; break;
+                        case 'cs':  refURL = 'https://www.php.net/manual/en/control-structures.'+ ref.replace(/_/g,'-') +'.php'; xURL += refURL; break;
 					}
 
 					ref = (type == 'wph') ? ref : ref + '()';
