@@ -24,14 +24,14 @@
 		answeratorButton.classList.add('grid--cell', 's-btn', 's-btn__primary', 's-btn__icon');
 		answeratorButton.style.background = '#9f43bd';
 		answeratorButton.innerText = 'Answerator';
-		answeratorButton.onclick = () => {
+		answeratorButton.onclick = (button) => {
 			event.preventDefault();
 
 			// Show we're doing something
-			var preview = this.closest('form').querySelector('.wmd-preview');
+			var preview = button.closest('form').querySelector('.wmd-preview');
 			preview.classList.add('loading');
 
-			var input = this.closest('form').querySelector('#wmd-input');
+			var input = button.closest('form').querySelector('#wmd-input');
 			input = (input === null) ? '' : input;
 			var value = input.value;
 
